@@ -10,8 +10,8 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.duokewat.towardscloud</groupId>
-	<artifactId>StockService</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>stockservice</artifactId>
+	<version>0.0.1</version>
 	<name>StockService</name>
 	<description>App for Stock Price</description>
 	<properties>
@@ -48,6 +48,32 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.39.0</version>
+				<configuration>
+				<excludeDevtools>false</excludeDevtools>
+					<images>
+						<image>
+							<alias>stock-service</alias>
+							<name>duokewat/${project.artifactId}:${project.version}</name>
+							<build>
+								<from>openjdk:11</from>
+								<assemblies>
+									<assembly>
+										<mode>dir</mode>
+										<descriptorRef>artifact</descriptorRef>
+									</assembly>
+								</assemblies>
+								<entryPoint>java -jar /maven/${project.artifactId}-${project.version}.jar</entryPoint>
+							</build>
+						</image>
+					</images>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
