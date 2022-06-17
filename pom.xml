@@ -28,10 +28,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -54,7 +51,7 @@
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.39.0</version>
 				<configuration>
-				<excludeDevtools>false</excludeDevtools>
+				
 					<images>
 						<image>
 							<alias>stock-service</alias>
