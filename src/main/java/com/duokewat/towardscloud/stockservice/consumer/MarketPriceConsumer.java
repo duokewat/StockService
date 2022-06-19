@@ -13,7 +13,10 @@ import org.springframework.web.client.RestTemplate;
 import com.duokewat.towardscloud.stockservice.json.JsonResponse;
 import com.duokewat.towardscloud.stockservice.view.PriceRequestView;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class MarketPriceConsumer {
 
 	@Value("${stock.host}")
@@ -26,19 +29,28 @@ public class MarketPriceConsumer {
 	private String url;
 
 	public BigDecimal getPrice(PriceRequestView priceRequestView) {
+		log.debug("Inside getPrice()");
+		log.debug("apiHost '{}'",apiHost);
+		log.debug("key '{}'",key);
+		log.debug("url '{}'",url);
+		
 		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 		interceptors.add(new HeaderRequestInterceptor("ContentType", MediaType.APPLICATION_JSON_VALUE));
 		interceptors.add(new HeaderRequestInterceptor("X-RapidAPI-Host", apiHost));
 		interceptors.add(new HeaderRequestInterceptor("X-RapidAPI-Key", key));
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.setInterceptors(interceptors);
-
-		System.out.println(getUrl(priceRequestView));
-		System.out.println(apiHost);
-		System.out.println(key);
 		
-		JsonResponse jsonResponse = restTemplate.getForObject(getUrl(priceRequestView), JsonResponse.class);
-		return jsonResponse.getQuoteResponse().getResult().get(0).getRegularMarketPrice();
+		String finalUrl = getUrl(priceRequestView);
+		log.debug("finalUrl '{}'",finalUrl);
+		
+		JsonResponse jsonResponse = restTemplate.getForObject(finalUrl, JsonResponse.class);
+		log.debug("Post Cloud API call");
+		
+		BigDecimal price = jsonResponse.getQuoteResponse().getResult().get(0).getRegularMarketPrice();
+		log.debug("price '{}'",price);
+		
+		return price;
 	}
 
 	private String getUrl(PriceRequestView request) {
