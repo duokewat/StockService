@@ -1,5 +1,7 @@
 package com.duokewat.towardscloud.stockservice.controller;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +22,7 @@ public class MarketPriceController {
 	
 	@PostMapping("/price")
 	public PriceResponseView getRegularMarketPrice(@RequestBody PriceRequestView priceRequestView) {
-		Long regularMarketPrice = marketPriceConsumer.getPrice(priceRequestView);
+		BigDecimal regularMarketPrice = marketPriceConsumer.getPrice(priceRequestView);
 		
 		priceResponseView.setMarket(priceRequestView.getMarket());
 		priceResponseView.setStock(priceRequestView.getStock());

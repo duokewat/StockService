@@ -1,10 +1,10 @@
 package com.duokewat.towardscloud.stockservice.consumer;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
-
 import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,7 @@ public class MarketPriceConsumer {
 	@Value("${stock.url}")
 	private String url;
 
-	public Long getPrice(PriceRequestView priceRequestView) {
+	public BigDecimal getPrice(PriceRequestView priceRequestView) {
 		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 		interceptors.add(new HeaderRequestInterceptor("ContentType", MediaType.APPLICATION_JSON_VALUE));
 		interceptors.add(new HeaderRequestInterceptor("X-RapidAPI-Host", apiHost));
