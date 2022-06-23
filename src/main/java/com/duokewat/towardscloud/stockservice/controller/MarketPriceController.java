@@ -15,7 +15,7 @@ import com.duokewat.towardscloud.stockservice.view.PriceResponseView;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/market")
+@RequestMapping("/market/api/v1")
 @Slf4j
 public class MarketPriceController {
 	@Autowired
